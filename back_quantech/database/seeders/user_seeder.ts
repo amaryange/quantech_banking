@@ -14,7 +14,7 @@ export default class extends BaseSeeder {
       {
         fullName: 'Meledje Lasme',
         email: 'meledje@email.com',
-        phone: '+0987453244',
+        phone: '0987453244',
       },
     ]).createMany(2)
   }

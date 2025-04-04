@@ -52,50 +52,10 @@ export default function DashboardPage() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
             <BreadcrumbPage>Dashboard</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <TooltipProvider>
-        <div className="flex gap-6 mt-6">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="is-hover-open"
-                  onCheckedChange={(x) => setSettings({ isHoverOpen: x })}
-                  checked={settings.isHoverOpen}
-                />
-                <Label htmlFor="is-hover-open">Hover Open</Label>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>When hovering on the sidebar in mini state, it will open</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="disable-sidebar"
-                  onCheckedChange={(x) => setSettings({ disabled: x })}
-                  checked={settings.disabled}
-                />
-                <Label htmlFor="disable-sidebar">Disable Sidebar</Label>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Hide sidebar</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      </TooltipProvider>
 
       <Dashboard />
 
