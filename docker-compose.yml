@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # Backend AdonisJS
+  backend:
+    build:
+      context: ./back_quantech
+      dockerfile: Dockerfile
+    container_name: backend_quantech
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./back_quantech:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3333
+      - NODE_ENV=development
+      - DB_CONNECTION=pg
+      - PG_HOST=postgres
+      - PG_PORT=5433
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB_NAME=quantech
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./front_quantech
+      dockerfile: Dockerfile
+    container_name: frontend_quantech
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./back_quantech:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3333
+      - NODE_ENV=development
+      - DB_CONNECTION=pg
+      - PG_HOST=postgres
+      - PG_PORT=5433
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB_NAME=quantech
+
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: postgres_quantech
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: quantech
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
